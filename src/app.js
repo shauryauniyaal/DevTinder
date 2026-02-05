@@ -6,7 +6,7 @@ const app = express();
 
 app.get("/user/:userId/:name", (req, res) => {
   // Dynamic routes
-  console.log(req.query); // Q  uery parameters
+  console.log(req.query); // Query parameters
   console.log(req.params);
 
   res.send({ firstName: "Shaurya", lastName: "Uniyal" });
