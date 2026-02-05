@@ -1,0 +1,27 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Tinder for devs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shauryauniyaal/DevTinder.git"
+  },
+  "author": "Shaurya Uniyal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shauryauniyaal/DevTinder/issues"
+  },
+  "homepage": "https://github.com/shauryauniyaal/DevTinder#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
