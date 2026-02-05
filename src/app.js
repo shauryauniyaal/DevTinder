@@ -4,7 +4,11 @@ const app = express();
 
 // request handlers
 
-app.get("/user", (req, res) => {
+app.get("/user/:userId/:name", (req, res) => {
+  // Dynamic routes
+  console.log(req.query); // Q  uery parameters
+  console.log(req.params);
+
   res.send({ firstName: "Shaurya", lastName: "Uniyal" });
 });
 
