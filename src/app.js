@@ -2,30 +2,25 @@ const express = require("express");
 
 const app = express();
 
-// request handlers
+const { adminAuth, userAuth } = require("./middlewares/auth");
 
-app.get("/user/:userId/:name", (req, res) => {
-  // Dynamic routes
-  console.log(req.query); // Query parameters
-  console.log(req.params);
+app.use("/admin", adminAuth); // Usage of middlewares here
 
-  res.send({ firstName: "Shaurya", lastName: "Uniyal" });
+app.get("/admin/getData", (req, res) => {
+  res.send("Getting data");
 });
 
-app.post("/user", (req, res) => {
-  res.send("POST req successful");
+app.post("/admin/postData", (req, res) => {
+  res.send("Posting data");
 });
 
-app.patch("/user", (req, res) => {
-  res.send("PATCH req successful");
+app.get("/user/profile", userAuth, (req, res) => {
+  // Middlewares also used here
+  res.send("Getting user profile");
 });
 
-app.delete("/user", (req, res) => {
-  res.send("DELETE req successful");
-});
-
-app.use("/test", (req, res) => {
-  res.send("This is the test page!");
+app.get("/user/login", (req, res) => {
+  res.send("Logging in");
 });
 
 app.listen(7777, () => {
