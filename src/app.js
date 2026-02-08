@@ -23,6 +23,17 @@ app.get("/user/login", (req, res) => {
   res.send("Logging in");
 });
 
+app.get("/dashboard", (req, res) => {
+  throw new Error("Hello");
+});
+
+app.use("/", (err, req, res, next) => {
+  // Error handling using middleware
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
 app.listen(7777, () => {
   console.log("Server is running on port 7777.");
 });
