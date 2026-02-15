@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/shauryauniyaal/DevTinder#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"

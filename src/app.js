@@ -1,39 +1,35 @@
 const express = require("express");
 
+const { connectDB } = require("./config/database");
+const { User } = require("./models/user");
+const { default: mongoose } = require("mongoose");
+
 const app = express();
 
-const { adminAuth, userAuth } = require("./middlewares/auth");
-
-app.use("/admin", adminAuth); // Usage of middlewares here
-
-app.get("/admin/getData", (req, res) => {
-  res.send("Getting data");
-});
-
-app.post("/admin/postData", (req, res) => {
-  res.send("Posting data");
-});
-
-app.get("/user/profile", userAuth, (req, res) => {
-  // Middlewares also used here
-  res.send("Getting user profile");
-});
-
-app.get("/user/login", (req, res) => {
-  res.send("Logging in");
-});
-
-app.get("/dashboard", (req, res) => {
-  throw new Error("Hello");
-});
-
-app.use("/", (err, req, res, next) => {
-  // Error handling using middleware
-  if (err) {
-    res.status(500).send("Something went wrong");
+app.post("/signup", (req, res) => {
+  const user = new User({
+    firstName: "Abc",
+    lastName: "Xyz",
+    emailId: "abc@xyz.com",
+    password: "abc123",
+    age: "24",
+    gender: "Male",
+  });
+  try {
+    user.save();
+    res.send("User added successfully.");
+  } catch (err) {
+    res.status(400).send("User was not added.");
   }
 });
 
-app.listen(7777, () => {
-  console.log("Server is running on port 7777.");
-});
+connectDB()
+  .then(() => {
+    console.log("DB Connection successful");
+    app.listen(7777, () => {
+      console.log("Server is running on port 7777.");
+    });
+  })
+  .catch(() => {
+    console.log("DB Connection unsuccessful");
+  });
