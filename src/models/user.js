@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const userSchema = new mongoose.Schema(
   {
@@ -17,8 +18,8 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
       validate(value) {
-        if (!value.includes("@gmail.com")) {
-          throw new Error("Email id not valid.");
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is not valid.");
         }
       },
     },
@@ -26,7 +27,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minLength: 8,
-      maxLength: 20,
     },
     age: {
       type: Number,
@@ -45,6 +45,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("URL is not valid.");
+        }
+      },
     },
     about: {
       type: String,
@@ -52,6 +57,18 @@ const userSchema = new mongoose.Schema(
     },
     skills: {
       type: [String],
+      validate(value) {
+        value = [
+          ...new Set(
+            value
+              .map((s) => s.trim().toLowerCase())
+              .filter((s) => s.length > 0),
+          ),
+        ];
+        if (value.length > 10) {
+          throw new Error("You can only add 10 skills.");
+        }
+      },
     },
   },
   { timestamps: true }, // To get createdOn and updatedOn for documents
