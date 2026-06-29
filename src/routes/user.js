@@ -54,6 +54,10 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 userRouter.get("/user/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+
+    const skip = (page - 1) * limit;
 
     const connectionRequests = await ConnectionRequest.find({
       $or: [
@@ -89,7 +93,10 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
 
     const requiredUsers = await User.find({
       _id: { $nin: inelligibleUserIds },
-    }).select(EXPOSED_USER_DETAILS);
+    })
+      .select(EXPOSED_USER_DETAILS)
+      .skip(skip)
+      .limit(limit);
 
     const data = requiredUsers.map((user) => {
       if (incomingRequestsSenderIds.includes(user._id.toString())) {
