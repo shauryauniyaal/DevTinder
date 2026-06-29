@@ -1,9 +1,9 @@
-node_modules
+**/node_modules
 
-%USERPROFILE%AppDataRoamingnpm
+backend/%USERPROFILE%AppDataRoamingnpm
 
-postman/environments/
-postman/globals/
-.postman/
+backend/postman/environments/
+backend/postman/globals/
+backend/.postman/
 
-.env
+backend/.env
